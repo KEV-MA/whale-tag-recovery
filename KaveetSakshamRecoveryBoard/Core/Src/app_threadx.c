@@ -36,7 +36,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define THREAD_STACK_SIZE 1024
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -47,11 +47,14 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
 extern Thread_HandleTypeDef threads[NUM_THREADS];
+TX_THREAD thread_one;
+uint8_t thread_stack[THREAD_STACK_SIZE];
+uint32_t thread_one_counter = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-
+void thread_one_entry(ULONG thread_input);
 /* USER CODE END PFP */
 
 /**
@@ -110,7 +113,7 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
 void MX_ThreadX_Init(void)
 {
   /* USER CODE BEGIN  Before_Kernel_Start */
-
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET);
   /* USER CODE END  Before_Kernel_Start */
 
   tx_kernel_enter();
@@ -169,5 +172,14 @@ ULONG App_ThreadX_LowPower_Timer_Adjust(void)
 }
 
 /* USER CODE BEGIN 1 */
+void thread_one_entry(ULONG thread_input) {
 
+	while (1) {
+		thread_one_counter++;
+		tx_thread_sleep(1);
+		if (thread_one_counter > 5000) {
+			thread_one_counter = 0;
+		}
+	}
+}
 /* USER CODE END 1 */

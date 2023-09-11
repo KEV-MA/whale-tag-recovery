@@ -18,6 +18,7 @@
 
 #include "tx_api.h"
 #include "app_threadx.h"
+#include "Lib Inc/power_led.h"
 #include "Lib Inc/state_machine.h"
 #include "Recovery Inc/Aprs.h"
 #include "Recovery Inc/FishTracker.h"
@@ -36,6 +37,7 @@ typedef enum __TX_THREAD_LIST {
 	BATTERY_MONITOR_THREAD,
 	PI_COMMS_RX_THREAD,
 	PI_COMMS_TX_THREAD,
+	POWER_LED_THREAD,
 	NUM_THREADS //DO NOT ADD THREAD ENUMS BELOW THIS
 }Thread;
 
@@ -71,7 +73,6 @@ typedef struct __TX_THREAD_TypeDef {
 
 //Define the config for each struct here, in the same order the are listed in the Thread Enum above.
 static Thread_ConfigTypeDef threadConfigList[NUM_THREADS] = {
-
 		[STATE_MACHINE_THREAD] = {
 				//State Machine Thread
 				.thread_name = "State Machine Thread",
@@ -148,6 +149,17 @@ static Thread_ConfigTypeDef threadConfigList[NUM_THREADS] = {
 				.preempt_threshold = 3,
 				.timeslice = TX_NO_TIME_SLICE,
 				.start = TX_DONT_START
+		},
+		[POWER_LED_THREAD] = {
+				// Power LED Thread
+				.thread_name = "Power LED Thread",
+				.thread_entry_function = power_led_thread_entry,
+				.thread_input = 0x1234,
+				.thread_stack_size = 2048,
+				.priority = 1,
+				.preempt_threshold = 1,
+				.timeslice = TX_NO_TIME_SLICE,
+				.start = TX_AUTO_START
 		}
 };
 
