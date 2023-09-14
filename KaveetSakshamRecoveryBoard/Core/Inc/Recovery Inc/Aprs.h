@@ -28,7 +28,7 @@
 
 #define GPS_SLEEP_LENGTH tx_s_to_ticks(10)
 
-#define APRS_BASE_SLEEP_LENGTH tx_s_to_ticks(60)
+#define APRS_BASE_SLEEP_LENGTH tx_s_to_ticks(2)
 
 #define NUM_TX_ATTEMPTS 3
 

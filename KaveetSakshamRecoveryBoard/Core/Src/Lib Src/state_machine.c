@@ -29,7 +29,7 @@ void state_machine_thread_entry(ULONG thread_input){
     } else if (state == STATE_WAITING){
 		enter_waiting();
 	} else if (state == STATE_APRS){
-		enter_waiting();
+		//enter_waiting();
 		enter_aprs_recovery();
 	} else if (state == STATE_GPS_COLLECT){
 		enter_waiting();

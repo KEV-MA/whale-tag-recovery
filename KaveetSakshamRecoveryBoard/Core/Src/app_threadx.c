@@ -97,6 +97,7 @@ UINT App_ThreadX_Init(VOID *memory_ptr)
 	else {
 		tx_thread_resume(&threads[STATE_MACHINE_THREAD].thread);
 	}
+
   /* USER CODE END App_ThreadX_Init */
 
   return ret;

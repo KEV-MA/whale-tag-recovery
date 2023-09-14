@@ -27,7 +27,7 @@ void battery_monitor_thread_entry(ULONG thread_input){
 
 		//If our voltage is too low (low battery detected)
 		if (voltage_mon < BATT_MON_LOW_VOLTAGE_THRESHOLD){
-			tx_event_flags_set(&state_machine_event_flags_group, STATE_CRITICAL_LOW_BATTERY_FLAG, TX_OR);
+			//tx_event_flags_set(&state_machine_event_flags_group, STATE_CRITICAL_LOW_BATTERY_FLAG, TX_OR);
 		}
 
 		//Sleep and repeat the process once woken up
