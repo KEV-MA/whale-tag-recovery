@@ -30,7 +30,7 @@ void aprs_thread_entry(ULONG aprs_thread_input){
 	initialize_gps(&huart3, &gps);
 
 	//Initialize VHF module for transmission. Turn transmission off so we don't hog the frequency
-	initialize_vhf(huart4, false, TX_FREQ, RX_FREQ);
+	initialize_vhf(huart4, true, TX_FREQ, RX_FREQ);
 	set_ptt(false);
 
 	//We arent in dominica by default
