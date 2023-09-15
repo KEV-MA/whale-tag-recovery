@@ -19,7 +19,6 @@ float voltage_mon = 0;
 //Main thread entry for battery monitoring function
 void battery_monitor_thread_entry(ULONG thread_input){
 
-
 	while (1){
 
 		//Get our battery voltage value

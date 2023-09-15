@@ -24,6 +24,7 @@
 #include "Recovery Inc/FishTracker.h"
 #include "Sensor Inc/GPSCollection.h"
 #include "Sensor Inc/BatteryMonitoring.h"
+#include "Sensor Inc/RTC.h"
 #include "Comms Inc/PiCommsRX.h"
 #include "Comms Inc/PiCommsTX.h"
 
@@ -37,7 +38,7 @@ typedef enum __TX_THREAD_LIST {
 	BATTERY_MONITOR_THREAD,
 	PI_COMMS_RX_THREAD,
 	PI_COMMS_TX_THREAD,
-	//POWER_LED_THREAD,
+	RTC_THREAD,
 	NUM_THREADS //DO NOT ADD THREAD ENUMS BELOW THIS
 }Thread;
 
@@ -150,18 +151,18 @@ static Thread_ConfigTypeDef threadConfigList[NUM_THREADS] = {
 				.preempt_threshold = 3,
 				.timeslice = TX_NO_TIME_SLICE,
 				.start = TX_DONT_START
-		},/*
-		[POWER_LED_THREAD] = {
+		},
+		[RTC_THREAD] = {
 				// Power LED Thread
-				.thread_name = "Power LED Thread",
-				.thread_entry_function = power_led_thread_entry,
+				.thread_name = "RTC Thread",
+				.thread_entry_function = RTC_thread_entry,
 				.thread_input = 0x1234,
 				.thread_stack_size = 2048,
-				.priority = 1,
-				.preempt_threshold = 1,
+				.priority = 8,
+				.preempt_threshold = 8,
 				.timeslice = TX_NO_TIME_SLICE,
-				.start = TX_AUTO_START
-		}*/
+				.start = TX_DONT_START
+		}
 };
 
 //An array to hold all the threads. We do NOT need to touch this at all the add new threads, only edit the config list (above).

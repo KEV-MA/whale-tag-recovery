@@ -29,7 +29,7 @@ void state_machine_thread_entry(ULONG thread_input){
     } else if (state == STATE_WAITING){
 		enter_waiting();
 	} else if (state == STATE_APRS){
-		//enter_waiting();
+		enter_waiting();
 		enter_aprs_recovery();
 	} else if (state == STATE_GPS_COLLECT){
 		enter_waiting();
@@ -74,7 +74,7 @@ void state_machine_thread_entry(ULONG thread_input){
 			if (actual_flags & STATE_COMMS_COLLECT_GPS_FLAG){
 
 				//Start GPS collection. Stop APRS collection if its currently running (since only one thread should access GPS hardware)
-				if (state == STATE_GPS_COLLECT){
+				if (state == STATE_APRS){
 					exit_aprs_recovery();
 				}
 
@@ -131,6 +131,7 @@ void exit_gps_collection(){
 //Starts the threads that are active while waiting (comms, battery monitoring)
 void enter_waiting(){
 
+	tx_thread_resume(&threads[RTC_THREAD].thread);
 	tx_thread_resume(&threads[BATTERY_MONITOR_THREAD].thread);
 	tx_thread_resume(&threads[PI_COMMS_TX_THREAD].thread);
 	tx_thread_resume(&threads[PI_COMMS_RX_THREAD].thread);
@@ -139,6 +140,7 @@ void enter_waiting(){
 //Exits the waiting threads
 void exit_waiting(){
 
+	tx_thread_suspend(&threads[RTC_THREAD].thread);
 	tx_thread_suspend(&threads[BATTERY_MONITOR_THREAD].thread);
 	tx_thread_suspend(&threads[PI_COMMS_TX_THREAD].thread);
 	tx_thread_suspend(&threads[PI_COMMS_RX_THREAD].thread);
