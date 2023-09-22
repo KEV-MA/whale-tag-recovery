@@ -153,7 +153,7 @@ static Thread_ConfigTypeDef threadConfigList[NUM_THREADS] = {
 				.start = TX_DONT_START
 		},
 		[RTC_THREAD] = {
-				// Power LED Thread
+				// RTC Thread
 				.thread_name = "RTC Thread",
 				.thread_entry_function = RTC_thread_entry,
 				.thread_input = 0x1234,
